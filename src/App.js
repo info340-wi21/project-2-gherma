@@ -36,7 +36,6 @@ function PlantText (props) {
     textClasses = textClasses.replace("d-none", " ");
     textClasses = textClasses + " base-content";
   }
-  console.log(textClasses + textContent);
 
   return (
     <p className={textClasses}>{textContent}</p>

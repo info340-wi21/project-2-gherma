@@ -10,7 +10,6 @@ let plantData = [];
 d3.csv('data/plant-data.csv')
   .then(function(text) {
     plantData = text;
-    console.log(plantData);
     ReactDOM.render(
         <App plantData={plantData}/>,
       document.getElementById('root')
