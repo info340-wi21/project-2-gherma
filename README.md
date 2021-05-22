@@ -2,7 +2,7 @@
 
 ## Our Project: Plant.
 
-![green leaves and white text in the center that says "plant."](img/readME_header.PNG)
+![green leaves and white text in the center that says "plant."](public/img/readME_header.PNG)
 
 ### Overview
 
