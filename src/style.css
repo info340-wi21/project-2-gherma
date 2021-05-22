@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Karla', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Rubik', sans-serif;
+}
+
+.plantGrid h1 {
+  font-size: 1.25rem;
+}
+
+.plantGrid h2, h3 {
+  font-size: 1.1rem;
+}
+
+.plantGrid p {
+  font-size:.95rem;
+}
+
+.plantGrid img:hover {
+  border: 2px solid #8fbf94;
+}
+
+.btn {
+  background-color: green;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #fffff5;
+  border: 1px solid green;
+}
+
+/* Responsive Design */
+
+@media (min-width: 576px) {
+  .card-columns {
+      column-count: 2;
+  }
+}
+
+@media (min-width: 768px) {
+  .card-columns {
+      column-count: 3;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card-columns {
+      column-count: 4;
+  }
+}
