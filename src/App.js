@@ -1,6 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faHeart as fasFaHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons';
+
+library.add(fasFaHeart, farFaHeart);
 
 export function App(props) {
   let plantArray = props.plantData;
@@ -49,9 +55,11 @@ function CardFront (props) {
       <div className="text-content card-text pt-2">
         <p className="d-none d-md-block m-1 p-0.5">{"Light Level: " + plantObject['Light Level']}</p>
         <p className="d-none d-md-block m-1 p-0.5">{"Water Level: " + plantObject['Water Level']}</p>
-        <p className="m-1 p-0.5">{"Overall Difficulty: " + plantObject['Overall Difficulty']}</p>
+        <div className="d-flex justify-content-between">
+          <p className="m-1 p-0.5">{"Overall Difficulty: " + plantObject['Overall Difficulty']}</p>
+          <div className="m-1 p-0.5"><FavoriteButton /></div>
+        </div>
       </div>
-
     </div>
   );
 }
@@ -87,8 +95,16 @@ function FavoriteButton () {
     setFavorite(!isFavorited);
   }
 
-  return (
+  let icon = <FontAwesomeIcon onClick={handleClick} icon={farFaHeart} color="green" size="lg"/>
 
+  if (isFavorited) {
+    icon = <FontAwesomeIcon onClick={handleClick} icon={fasFaHeart} color="green" size="lg"/>;
+  }
+
+  return (
+    <div>
+      {icon}
+    </div>
   );
 }
 
