@@ -7,6 +7,10 @@ h1, h2, h3 {
   font-family: 'Rubik', sans-serif;
 }
 
+.clickDetails {
+  color: #8fbf94;
+}
+
 .plantGrid h1 {
   font-size: 1.25rem;
 }

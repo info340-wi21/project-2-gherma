@@ -13,7 +13,6 @@ export function App(props) {
 
   return(
     <div>
-      <h1>Plant Care Site: React</h1>
       <PlantGrid plantArray={plantArray}/>
     </div>
   );
@@ -95,10 +94,10 @@ function FavoriteButton () {
     setFavorite(!isFavorited);
   }
 
-  let icon = <FontAwesomeIcon onClick={handleClick} icon={farFaHeart} color="green" size="lg"/>
+  let icon = <FontAwesomeIcon onClick={handleClick} icon={farFaHeart} color="green" size="lg" aria-label="add to favorites"/>
 
   if (isFavorited) {
-    icon = <FontAwesomeIcon onClick={handleClick} icon={fasFaHeart} color="green" size="lg"/>;
+    icon = <FontAwesomeIcon onClick={handleClick} icon={fasFaHeart} color="green" size="lg" aria-label="add to favorites"/>;
   }
 
   return (
@@ -115,8 +114,12 @@ function PlantGrid (props) {
   })
 
   return (
-    <div id="plant-cards" className="plantGrid card-columns col-lg-8 col-xl-9">
-    {plantElements}
+    <div>
+      <h2 className="p-1">{"View Plants: " + props.plantArray.length + " Results"}</h2>
+      <h3 className="clickDetails p-1">Click Plants for Details</h3>
+      <div id="plant-cards" className="plantGrid card-columns col-lg-8 col-xl-9">
+      {plantElements}
+      </div>
     </div>
   );
 }
