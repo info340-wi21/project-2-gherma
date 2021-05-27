@@ -29,15 +29,17 @@ function PlantCard (props) {
   }
 
   return (
-    <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-    <div className="card mb-4">
-      <CardFront plant={plantObject} handleClick={handleClick}/>
-    </div>
 
-    <div className="card mb-4">
-      <CardBack plant={plantObject} handleClick={handleClick}/>
-    </div>
-    </ReactCardFlip>
+      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+        <div className="card h-100">
+          <CardFront plant={plantObject} handleClick={handleClick}/>
+        </div>
+
+        <div className="card h-100">
+          <CardBack plant={plantObject} handleClick={handleClick}/>
+        </div>
+      </ReactCardFlip>
+
   );
 }
 
@@ -47,7 +49,6 @@ function CardFront (props) {
   let handleClick = props.handleClick;
 
   return (
-    <div className="card">
       <div className="card-body p-2">
         <img onClick={handleClick} className="img-fluid mb-3 rounded" src={"img/" + plantObject['Image Source']} alt={plantObject['Image Alt']} role="button" aria-label="get plant details"/>
         <h2 className="card-title">{plantObject['Plant Name']}</h2>
@@ -56,7 +57,6 @@ function CardFront (props) {
           <CardText cardSide="front" plant={plantObject} handleClick={handleClick}/>
         </div>
       </div>
-    </div>
   );
 }
 
@@ -65,7 +65,6 @@ function CardBack (props) {
   let handleClick = props.handleClick;
 
   return (
-    <div className="card">
       <div className="card-body p-2">
         <h2 className="card-title">{plantObject['Plant Name']}</h2>
         <h3 className="card-subtitle font-weight-light text-muted">{plantObject['Latin Name']}</h3>
@@ -73,7 +72,6 @@ function CardBack (props) {
           <CardText cardSide="back" plant={plantObject} handleClick={handleClick}/>
         </div>
       </div>
-    </div>
   );
 }
 
@@ -146,8 +144,10 @@ function PlantGrid (props) {
     <div>
       <h2 className="p-1">{"View Plants: " + props.plantArray.length + " Results"}</h2>
       <h3 className="clickDetails p-1">Click Plants for Details</h3>
-      <div id="plant-cards" className="plantGrid card-columns col-lg-8 col-xl-9">
-      {plantElements}
+      <div className="container-fluid col-lg-8 col-xl-9">
+        <div id="plant-cards" className="plantGrid row row-cols-2 row-cols-md-3 row-cols-lg-4">
+        {plantElements}
+        </div>
       </div>
     </div>
   );
