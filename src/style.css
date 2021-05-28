@@ -20,11 +20,23 @@ h1, h2, h3 {
 }
 
 .plantGrid p {
-  font-size:.95rem;
+  font-size: .96rem;
+}
+
+.plantGrid img {
+  border: 2px solid transparent;
 }
 
 .plantGrid img:hover {
   border: 2px solid #8fbf94;
+}
+
+.card-footer {
+  background: #edf5ee;
+}
+
+.icon:hover {
+  color: #698770;
 }
 
 .btn {
