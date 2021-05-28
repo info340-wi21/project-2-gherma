@@ -30,7 +30,7 @@ function PlantCard (props) {
 
   return (
 
-      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+      <ReactCardFlip containerStyle={{marginBottom: "20px"}} isFlipped={isFlipped} flipDirection="horizontal">
         <div className="card h-100">
           <CardFront plant={plantObject} handleClick={handleClick}/>
         </div>
@@ -142,8 +142,10 @@ function PlantGrid (props) {
 
   return (
     <div>
-      <h2 className="p-1">{"View Plants: " + props.plantArray.length + " Results"}</h2>
-      <h3 className="clickDetails p-1">Click Plants for Details</h3>
+      <div className="d-flex justify-content-between">
+        <h2 className="p-1">{"View Plants: " + props.plantArray.length + " Results"}</h2>
+        <h3 className="clickDetails p-1 align-self-end">Click Plants for Details</h3>
+      </div>
       <div className="container-fluid col-lg-8 col-xl-9">
         <div id="plant-cards" className="plantGrid row row-cols-2 row-cols-md-3 row-cols-lg-4">
         {plantElements}
