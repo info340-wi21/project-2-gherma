@@ -7,6 +7,10 @@ h1, h2, h3 {
   font-family: 'Rubik', sans-serif;
 }
 
+h4.social-media {
+  font-size: 1em;
+}
+
 .clickDetails {
   color: #8fbf94;
 }
@@ -36,7 +40,7 @@ h1, h2, h3 {
 }
 
 .icon:hover {
-  color: #698770;
+  color: #fffd8a;
 }
 
 .btn {
@@ -47,6 +51,41 @@ h1, h2, h3 {
 .btn:hover {
   background-color: #fffff5;
   border: 1px solid green;
+}
+
+header.about {
+  background-image: url("plantSanctuary.jpg");
+  background-position: 50% 75%;
+  width: 100%;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #FFFFFF;
+  width: 100%;
+  padding: .25rem;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  padding: 1rem;
+  color: rgba(5, 122, 34, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer div {
+  padding: 0.5rem;
 }
 
 /* Responsive Design */

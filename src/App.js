@@ -4,6 +4,7 @@ import ReactCardFlip from 'react-card-flip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasFaHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons';
+import { FaHome, FaInfoCircle, FaBars, FaRegUser, FaRegHeart, FaHeart } from "react-icons/fa";
 
 
 export function App(props) {
@@ -11,11 +12,31 @@ export function App(props) {
 
   return(
     <div>
+      <Header />
       <PlantGrid plantArray={plantArray}/>
+      <Footer />
     </div>
   );
 }
 
+function Header () {
+
+  return (
+  <header className="jumbotron about">
+    <nav>
+      <div className="d-md-none d-inline" id="hamburger-menu"><a href="#"><FaBars className="text-dark" aria-label="menu"/></a></div>
+      <ul className="d-none d-md-inline p-1">
+        <a className="text-dark mr-3" href="#"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</a>
+        <a className="text-dark m-3" href="landing.html"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</a>
+        <a className="text-dark" href="#"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</a>
+      </ul>
+    </nav>
+    <div className="container pt-5 text-center text-white">
+      <h1 className="font-weight-light">Plant.</h1>
+    </div>
+  </header>
+  );
+}
 
 function PlantCard (props) {
   let plantObject = props.plant;
@@ -89,7 +110,7 @@ function CardText (props) {
   <div>
     <p className="m-1 p-0.5">{"Light Level: " + plantObject['Light Level']}</p>
     <p className="m-1 p-0.5">{"Water Level: " + plantObject['Water Level']}</p>
-    <p className="m-1 p-0.5">{"Temperature: " + plantObject['Temperature (opt temp 60-75, above 75, below 60)']}</p>
+    <p className="m-1 p-0.5">{"Temperature: " + plantObject['Temperature (opt temp 60-75, above 75, below 60)']}&#176;F</p>
     <p className="m-1 p-0.5">{"Pot Size: " + plantObject['Pot Size']}</p>
     <p className="m-1 p-0.5">{"Overall Difficulty: " + plantObject['Overall Difficulty']}</p>
     <p className="m-1 p-0.5">{"Toxicity: " + plantObject['Toxicity']}</p>
@@ -122,10 +143,10 @@ function FavoriteButton () {
     setFavorite(!isFavorited);
   }
 
-  let icon = <FontAwesomeIcon className="icon" onClick={handleClick} icon={farFaHeart} color="green" size="lg" aria-label="add to favorites"/>
+  let icon = <FaRegHeart className="icon" onClick={handleClick} color="green" size={20} aria-label="add to favorites"/>
 
   if (isFavorited) {
-    icon = <FontAwesomeIcon className="icon" onClick={handleClick} icon={fasFaHeart} color="green" size="lg" aria-label="add to favorites"/>;
+    icon = <FaHeart className="icon" onClick={handleClick} color="green" size={20} aria-label="add to favorites"/>;
   }
 
   return (
@@ -151,6 +172,15 @@ function PlantGrid (props) {
       {plantElements}
       </div>
     </div>
+  );
+}
+
+function Footer () {
+  return (
+    <footer>
+      <h4 className="text-center social-media font-weight-light">&#169;
+2021 Alex Gherman, Mai Frey, Sneha Reddy</h4>
+    </footer>
   );
 }
 
