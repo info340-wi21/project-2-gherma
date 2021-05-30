@@ -12,7 +12,7 @@ import Form from './Form';
 
 export function App(props) {
   let plantArray = props.plantData;
-  this.state = {
+  const STATE = {
     allPlantData: [],
     filteredData: []
   }
@@ -27,10 +27,10 @@ export function App(props) {
         console.log(error);
     });
 
-filterPlayers = (info) => {
-  let filteredArray = this.state.allPlantData;
-  if (info['PLant Name'] !== '') {
-      let searchName = info['PLant Name'].toLowerCase();
+let filteredData = (info) => {
+  let filteredArray = STATE.allPlantData;
+  if (info['Plant Name'] !== '') {
+      let searchName = info['Plant Name'].toLowerCase();
       let words = searchName.split(" ");
       filteredArray = filteredArray.filter((item) => {
           let name = item.long_name;
@@ -67,14 +67,14 @@ filterPlayers = (info) => {
   this.setState({ filteredData: filteredArray });
 }
 
-handleReset = () => {
-  this.setState({ filteredData: this.state.allPlantData });
+let handleReset = () => {
+  this.setState({ filteredData: STATE.allPlantData });
 }
 
   return(
     <div>
       <Header />
-      <PlantGrid plantArray={plantArray}/>
+      <PlantGrid plantArray={plantArray} data={STATE.allPlantData} callback={filteredData} reset={handleReset}/>
       <Footer />
     </div>
   );
@@ -224,17 +224,19 @@ function PlantGrid (props) {
   })
 
   return (
-    <div className="container-fluid col-lg-8 col-xl-9">
-      <div className="d-flex justify-content-between">
-        <h2 className="clickDetails m-0 p-0.5 align-self-end">Click Plant for Details</h2>
-        <h3 className="m-0 p-0.5 align-self-end">{props.plantArray.length + " Results"}</h3>
-      </div>
-      <div className="col-lg-4 col-xl-3 collapse show" id="form-feature">
+    <div className="row">
+      <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
         <p id="Filters">Filter your search here!</p>
-       <Form data={this.state.allPlantData} callback={this.filteredData} reset={this.handleReset} />
+       <Form data={props.data} callback={props.callback} reset={props.reset} />
      </div>
-      <div id="plant-cards" className="plantGrid row row-cols-2 row-cols-md-3 row-cols-lg-4">
-      {plantElements}
+      <div className="container-fluid col-lg-8 col-xl-9">
+        <div className="d-flex justify-content-between mx-3">
+          <h2 className="clickDetails m-0 p-0.5 align-self-end">Click Plant for Details</h2>
+          <h3 className="m-0 p-0.5 align-self-end">{props.plantArray.length + " Results"}</h3>
+        </div>
+        <div id="plant-cards" className="plantGrid row row-cols-2 row-cols-md-3 row-cols-lg-4 m-1">
+        {plantElements}
+        </div>
       </div>
     </div>
   );
