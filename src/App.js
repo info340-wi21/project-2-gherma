@@ -1,14 +1,75 @@
 import React from 'react';
 import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
+import * as d3 from 'd3';
+import 'd3';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasFaHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons';
 import { FaHome, FaInfoCircle, FaBars, FaRegUser, FaRegHeart, FaHeart } from "react-icons/fa";
+import Form from './Form';
 
 
 export function App(props) {
   let plantArray = props.plantData;
+  this.state = {
+    allPlantData: [],
+    filteredData: []
+  }
+    d3.csv("plant-data.csv").then((data) => {
+        this.setState({
+            allPlantData: data,
+            filteredData: data
+        })
+    })
+
+    .catch((error) => {
+        console.log(error);
+    });
+
+filterPlayers = (info) => {
+  let filteredArray = this.state.allPlantData;
+  if (info['PLant Name'] !== '') {
+      let searchName = info['PLant Name'].toLowerCase();
+      let words = searchName.split(" ");
+      filteredArray = filteredArray.filter((item) => {
+          let name = item.long_name;
+          let containsAllWords = true;
+          for (let i = 0; i < words.length; i++) {
+              if (!name.toLowerCase().includes(words[i])) {
+                  return false;
+              }
+          }
+          return containsAllWords;
+      });
+  }
+  if (info['Light Level'] !== 'DEFAULT') {
+      filteredArray = filteredArray.filter((item) => {
+          return item['Light Level'] === info['Light Level'];
+      });
+  }
+  if (info['Water Level'] !== 'DEFAULT') {
+    filteredArray = filteredArray.filter((item) => {
+        return item['Water Level'] === info['Water Level'];
+    });
+  }
+  if (info.Toxicity !== 'DEFAULT') {
+      filteredArray = filteredArray.filter((item) => {
+          return item.Toxicity.includes(info.Toxicity);
+      });
+  }
+  if (info.Difficulty !== 'DEFAULT') {
+    filteredArray = filteredArray.filter((item) => {
+        return item['Overall Difficulty'].includes(info.Difficulty);
+    });
+}
+
+  this.setState({ filteredData: filteredArray });
+}
+
+handleReset = () => {
+  this.setState({ filteredData: this.state.allPlantData });
+}
 
   return(
     <div>
@@ -17,7 +78,7 @@ export function App(props) {
       <Footer />
     </div>
   );
-}
+  }
 
 function Header () {
 
@@ -168,6 +229,10 @@ function PlantGrid (props) {
         <h2 className="clickDetails m-0 p-0.5 align-self-end">Click Plant for Details</h2>
         <h3 className="m-0 p-0.5 align-self-end">{props.plantArray.length + " Results"}</h3>
       </div>
+      <div className="col-lg-4 col-xl-3 collapse show" id="form-feature">
+        <p id="Filters">Filter your search here!</p>
+       <Form data={this.state.allPlantData} callback={this.filteredData} reset={this.handleReset} />
+     </div>
       <div id="plant-cards" className="plantGrid row row-cols-2 row-cols-md-3 row-cols-lg-4">
       {plantElements}
       </div>

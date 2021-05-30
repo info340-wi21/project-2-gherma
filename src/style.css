@@ -53,6 +53,22 @@ h4.social-media {
   border: 1px solid green;
 }
 
+form .btn {
+  background-color: green;
+  border: 1px solid #8fbf94;
+  color: white;
+  transition: none;
+}
+
+#reset-btn {
+  margin-left: 5%;
+}
+
+form .btn:hover {
+  background-color: #fffff5;
+  border: 1px solid green;
+  color: white;
+}
 header.about {
   background-image: url("plantSanctuary.jpg");
   background-position: 50% 75%;
