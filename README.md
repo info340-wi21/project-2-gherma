@@ -16,4 +16,4 @@ Houseplants, as well as outdoor plants, have become increasingly popular for dec
 Users of our proposed application include anyone interested in the cultivation of houseplants, specifically, users who need help identifying which plant species best suits their needs. Our website aims to inform users of the qualities and care needed to maintain specific houseplants with an emphasis on environmental consciousness. Thus, this topic naturally lends itself to a user demographic that is likely inexperienced with houseplants and interested in the environmental impacts houseplants have.
 
 
-The site can be viewed at <https://firebase-project-id.firebaseapp.com//>
+The site can be viewed at <https://plant-abb5d.firebaseapp.com//>
