@@ -67,7 +67,7 @@ form .btn {
 form .btn:hover {
   background-color: #fffff5;
   border: 1px solid green;
-  color: white;
+  color: black;
 }
 header.about {
   background-image: url("plantSanctuary.jpg");
