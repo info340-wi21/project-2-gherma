@@ -16,15 +16,14 @@ export function App(props) {
   const [diffi, setDiffi] = useState("");
 
   filteredPlants = plantArray.filter((plant) => {
-    console.log(plant);
     let pass = true;
-    if (plant["Water Level"] != water && water != "DEFAULT" && water != "") {
+    if (plant["Water Level"] !== water && water !== "DEFAULT" && water !== "") {
       pass = false;
-    } else if (plant["Light Level"] != light && light != "DEFAULT" && light != "") {
+    } else if (plant["Light Level"] !== light && light !== "DEFAULT" && light !== "") {
       pass = false;
-    } else if (plant["Overall Difficulty"] != diffi && diffi != "DEFAULT" && diffi != "") {
+    } else if (plant["Overall Difficulty"] !== diffi && diffi !== "DEFAULT" && diffi !== "") {
       pass = false;
-    } else if (plant["Toxicity"] != tox && tox != "DEFAULT" && tox != "") {
+    } else if (plant["Toxicity"] !== tox && tox !== "DEFAULT" && tox !== "") {
       pass = false;
     }
     if (pass) {
@@ -33,11 +32,11 @@ export function App(props) {
   })
 
   const changeForm = (filter, type) => {
-    if (type == "Water Level") {
+    if (type === "Water Level") {
       setWater(filter);
-    } else if (type == "Light Level") {
+    } else if (type === "Light Level") {
       setLight(filter);
-    } else if (type == "Overall Difficulty") {
+    } else if (type === "Overall Difficulty") {
       setDiffi(filter);
     } else {
       setTox(filter);
@@ -48,11 +47,13 @@ export function App(props) {
   return(
     <div>
       <Header />
-      <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
-        <p id="Filters">Filter your search here!</p>
-        <Filtering changeForm={changeForm}/>
+      <div className="row px-2">
+        <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
+          <p id="Filters">Filter your search here!</p>
+          <Filtering changeForm={changeForm}/>
+        </div>
+        <PlantGrid plantArray={filteredPlants}/>
       </div>
-      <PlantGrid plantArray={filteredPlants}/>
       <About />
       <Footer />
     </div>
@@ -204,7 +205,6 @@ function PlantGrid (props) {
   })
 
   return (
-    <div className="row">
       <div className="container-fluid col-lg-8 col-xl-9">
         <div className="d-flex justify-content-between mx-3">
           <h2 className="clickDetails m-0 p-0.5 align-self-end">Click Plant for Details</h2>
@@ -214,7 +214,6 @@ function PlantGrid (props) {
         {plantElements}
         </div>
       </div>
-    </div>
   );
 }
 
