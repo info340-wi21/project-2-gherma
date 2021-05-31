@@ -1,8 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
-import * as d3 from 'd3';
-import 'd3';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as fasFaHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons';
@@ -12,69 +10,12 @@ import Form from './Form';
 
 export function App(props) {
   let plantArray = props.plantData;
-  const STATE = {
-    allPlantData: [],
-    filteredData: []
-  }
-    d3.csv("plant-data.csv").then((data) => {
-        this.setState({
-            allPlantData: data,
-            filteredData: data
-        })
-    })
-
-    .catch((error) => {
-        console.log(error);
-    });
-
-let filteredData = (info) => {
-  let filteredArray = STATE.allPlantData;
-  if (info['Plant Name'] !== '') {
-      let searchName = info['Plant Name'].toLowerCase();
-      let words = searchName.split(" ");
-      filteredArray = filteredArray.filter((item) => {
-          let name = item.long_name;
-          let containsAllWords = true;
-          for (let i = 0; i < words.length; i++) {
-              if (!name.toLowerCase().includes(words[i])) {
-                  return false;
-              }
-          }
-          return containsAllWords;
-      });
-  }
-  if (info['Light Level'] !== 'DEFAULT') {
-      filteredArray = filteredArray.filter((item) => {
-          return item['Light Level'] === info['Light Level'];
-      });
-  }
-  if (info['Water Level'] !== 'DEFAULT') {
-    filteredArray = filteredArray.filter((item) => {
-        return item['Water Level'] === info['Water Level'];
-    });
-  }
-  if (info.Toxicity !== 'DEFAULT') {
-      filteredArray = filteredArray.filter((item) => {
-          return item.Toxicity.includes(info.Toxicity);
-      });
-  }
-  if (info.Difficulty !== 'DEFAULT') {
-    filteredArray = filteredArray.filter((item) => {
-        return item['Overall Difficulty'].includes(info.Difficulty);
-    });
-}
-
-  this.setState({ filteredData: filteredArray });
-}
-
-let handleReset = () => {
-  this.setState({ filteredData: STATE.allPlantData });
-}
 
   return(
     <div>
       <Header />
-      <PlantGrid plantArray={plantArray} data={STATE.allPlantData} callback={filteredData} reset={handleReset}/>
+      <Search />
+      <PlantGrid plantArray={plantArray}/>
       <Footer />
     </div>
   );
@@ -96,6 +37,60 @@ function Header () {
       <h1 className="font-weight-light">Plant.</h1>
     </div>
   </header>
+  );
+}
+
+function Search (props) {
+  const [plantData, filteredPlantData] = useState([props.plant]);
+
+  const filteredData = (info) => {
+    let filteredArray = plantData;
+    if (info['Plant Name'] !== '') {
+        let searchName = info['Plant Name'].toLowerCase();
+        let words = searchName.split(" ");
+        filteredArray = filteredArray.filter((item) => {
+            let name = item.long_name;
+            let containsAllWords = true;
+            for (let i = 0; i < words.length; i++) {
+                if (!name.toLowerCase().includes(words[i])) {
+                    return false;
+                }
+            }
+            return containsAllWords;
+        });
+    }
+    if (info['Light Level'] !== 'DEFAULT') {
+        filteredArray = filteredArray.filter((item) => {
+            return item['Light Level'] === info['Light Level'];
+        });
+    }
+    if (info['Water Level'] !== 'DEFAULT') {
+      filteredArray = filteredArray.filter((item) => {
+          return item['Water Level'] === info['Water Level'];
+      });
+    }
+    if (info.Toxicity !== 'DEFAULT') {
+        filteredArray = filteredArray.filter((item) => {
+            return item.Toxicity.includes(info.Toxicity);
+        });
+    }
+    if (info.Difficulty !== 'DEFAULT') {
+      filteredArray = filteredArray.filter((item) => {
+          return item['Overall Difficulty'].includes(info.Difficulty);
+      });
+  }
+    filteredPlantData({ filteredData: filteredArray});
+  }
+  
+  const handleReset = () => {
+    filteredPlantData({ filteredData: plantData });
+  }
+
+  return (
+    <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
+      <p id="Filters">Filter your search here!</p>
+      <Form data={plantData} callback={filteredData} reset={handleReset} />
+     </div>
   );
 }
 
