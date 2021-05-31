@@ -2,22 +2,63 @@ import React from 'react';
 import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import { FaHome, FaInfoCircle, FaBars, FaRegUser, FaRegHeart, FaHeart } from "react-icons/fa";
-import SearchForm from './Form';
+import { Filtering } from './Form.js';
 import About from './About';
 
 
 export function App(props) {
   let plantArray = props.plantData;
+  let filteredPlants = [];
+
+  const [water, setWater] = useState("");
+  const [light, setLight] = useState("");
+  const [tox, setTox] = useState("");
+  const [diffi, setDiffi] = useState("");
+
+  filteredPlants = plantArray.filter((plant) => {
+    console.log(plant);
+    let pass = true;
+    if (plant["Water Level"] != water && water != "DEFAULT" && water != "") {
+      pass = false;
+    } else if (plant["Light Level"] != light && light != "DEFAULT" && light != "") {
+      pass = false;
+    } else if (plant["Overall Difficulty"] != diffi && diffi != "DEFAULT" && diffi != "") {
+      pass = false;
+    } else if (plant["Toxicity"] != tox && tox != "DEFAULT" && tox != "") {
+      pass = false;
+    }
+    if (pass) {
+      return plant;
+    }
+  })
+
+  const changeForm = (filter, type) => {
+    if (type == "Water Level") {
+      setWater(filter);
+    } else if (type == "Light Level") {
+      setLight(filter);
+    } else if (type == "Overall Difficulty") {
+      setDiffi(filter);
+    } else {
+      setTox(filter);
+    }
+  }
+
 
   return(
     <div>
       <Header />
-      <PlantGrid plantArray={plantArray}/>
+      <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
+        <p id="Filters">Filter your search here!</p>
+        <Filtering changeForm={changeForm}/>
+      </div>
+      <PlantGrid plantArray={filteredPlants}/>
       <About />
       <Footer />
     </div>
   );
-  }
+}
+
 
 function Header () {
 
@@ -35,60 +76,6 @@ function Header () {
       <h1 className="font-weight-light">Plant.</h1>
     </div>
   </header>
-  );
-}
-
-function Search (props) {
-  const [plantData, filteredPlantData] = useState([props.plant]);
-
-  const filteredData = (info) => {
-    let filteredArray = plantData;
-    if (info['Plant Name'] !== '') {
-        let searchName = info['Plant Name'].toLowerCase();
-        let words = searchName.split(" ");
-        filteredArray = filteredArray.filter((item) => {
-            let name = item.long_name;
-            let containsAllWords = true;
-            for (let i = 0; i < words.length; i++) {
-                if (!name.toLowerCase().includes(words[i])) {
-                    return false;
-                }
-            }
-            return containsAllWords;
-        });
-    }
-    if (info['Light Level'] !== 'DEFAULT') {
-        filteredArray = filteredArray.filter((item) => {
-            return item['Light Level'] === info['Light Level'];
-        });
-    }
-    if (info['Water Level'] !== 'DEFAULT') {
-      filteredArray = filteredArray.filter((item) => {
-          return item['Water Level'] === info['Water Level'];
-      });
-    }
-    if (info.Toxicity !== 'DEFAULT') {
-        filteredArray = filteredArray.filter((item) => {
-            return item.Toxicity.includes(info.Toxicity);
-        });
-    }
-    if (info.Difficulty !== 'DEFAULT') {
-      filteredArray = filteredArray.filter((item) => {
-          return item['Overall Difficulty'].includes(info.Difficulty);
-      });
-  }
-    filteredPlantData({ filteredData: filteredArray});
-  }
-
-  const handleReset = () => {
-    filteredPlantData({ filteredData: plantData });
-  }
-
-  return (
-    <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
-      <p id="Filters">Filter your search here!</p>
-      <SearchForm data={plantData} callback={filteredPlantData} reset={handleReset} />
-     </div>
   );
 }
 
@@ -218,7 +205,6 @@ function PlantGrid (props) {
 
   return (
     <div className="row">
-      <Search plant={plantElements}/>
       <div className="container-fluid col-lg-8 col-xl-9">
         <div className="d-flex justify-content-between mx-3">
           <h2 className="clickDetails m-0 p-0.5 align-self-end">Click Plant for Details</h2>
@@ -231,6 +217,7 @@ function PlantGrid (props) {
     </div>
   );
 }
+
 
 function Footer () {
   return (
