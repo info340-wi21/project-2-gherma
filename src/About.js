@@ -1,28 +1,19 @@
 import React from 'react';
 
-function App() {
+export function About () {
   return(
-    <body>
+    <div>
       <Header />
       <Content />
-      <Footer />
-    </body>
+    </div>
   );
 }
 
 function Header () {
   return (
-    <header className="jumbotron about">
-      <nav>
-        <div className="d-md-none d-inline" id="hamburger-menu"><a href="#"><FaBars className="text-dark" aria-label="menu"/></a></div>
-        <ul className="d-none d-md-inline p-1">
-          <a className="text-dark mr-3" href="#"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</a>
-          <a className="text-dark m-3" href="landing.html"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</a>
-          <a className="text-dark" href="#"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</a>
-        </ul>
-      </nav>
-      <div class="container pt-5 text-center text-white"><h1 class="font-weight-light">About Us</h1></div>
-    </header>
+      <div className="container pt-5 mb-4 text-center">
+        <h1 className="font-weight-light">About Us</h1>
+      </div>
   );
 }
 
@@ -52,7 +43,7 @@ function Content() {
                 </ul>
            </div>
           <div className="about-column d-none d-md-block">
-            <img className="plant-tower" src="./plantTower.jpeg" alt="building with overgrown plants spilling out"/>
+            <img className="plant-tower" src="img/plantTower.jpeg" alt="building with overgrown plants spilling out"/>
           </div>
         </div>
       </div>
@@ -60,11 +51,4 @@ function Content() {
   );
 }
 
-function Footer () {
-  return (
-    <footer>
-      <h4 className="text-center social-media font-weight-light">&#169;
-      2021 Alex Gherman, Mai Frey, Sneha Reddy</h4>
-    </footer>
-  );
-}
+export default About;

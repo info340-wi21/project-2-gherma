@@ -1,11 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as fasFaHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as farFaHeart } from '@fortawesome/free-regular-svg-icons';
 import { FaHome, FaInfoCircle, FaBars, FaRegUser, FaRegHeart, FaHeart } from "react-icons/fa";
-import Form from './Form';
+import SearchForm from './Form';
+import About from './About';
 
 
 export function App(props) {
@@ -14,8 +12,8 @@ export function App(props) {
   return(
     <div>
       <Header />
-      <Search />
       <PlantGrid plantArray={plantArray}/>
+      <About />
       <Footer />
     </div>
   );
@@ -29,7 +27,7 @@ function Header () {
       <div className="d-md-none d-inline" id="hamburger-menu"><a href="#"><FaBars className="text-dark" aria-label="menu"/></a></div>
       <ul className="d-none d-md-inline p-1">
         <a className="text-dark mr-3" href="#"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</a>
-        <a className="text-dark m-3" href="landing.html"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</a>
+        <a className="text-dark m-3" href="#"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</a>
         <a className="text-dark" href="#"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</a>
       </ul>
     </nav>
@@ -81,7 +79,7 @@ function Search (props) {
   }
     filteredPlantData({ filteredData: filteredArray});
   }
-  
+
   const handleReset = () => {
     filteredPlantData({ filteredData: plantData });
   }
@@ -89,7 +87,7 @@ function Search (props) {
   return (
     <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
       <p id="Filters">Filter your search here!</p>
-      <Form data={plantData} callback={filteredData} reset={handleReset} />
+      <SearchForm data={plantData} callback={filteredPlantData} reset={handleReset} />
      </div>
   );
 }
@@ -199,10 +197,10 @@ function FavoriteButton () {
     setFavorite(!isFavorited);
   }
 
-  let icon = <FaRegHeart className="icon" onClick={handleClick} color="green" size={20} aria-label="add to favorites"/>
+  let icon = <FaRegHeart className="heartIcon" onClick={handleClick} color="green" size={20} aria-label="add to favorites"/>
 
   if (isFavorited) {
-    icon = <FaHeart className="icon" onClick={handleClick} color="green" size={20} aria-label="add to favorites"/>;
+    icon = <FaHeart className="heartIcon" onClick={handleClick} color="green" size={20} aria-label="add to favorites"/>;
   }
 
   return (
@@ -220,10 +218,7 @@ function PlantGrid (props) {
 
   return (
     <div className="row">
-      <div className="col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
-        <p id="Filters">Filter your search here!</p>
-       <Form data={props.data} callback={props.callback} reset={props.reset} />
-     </div>
+      <Search plant={plantElements}/>
       <div className="container-fluid col-lg-8 col-xl-9">
         <div className="d-flex justify-content-between mx-3">
           <h2 className="clickDetails m-0 p-0.5 align-self-end">Click Plant for Details</h2>

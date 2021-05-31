@@ -45,13 +45,13 @@ class SearchForm extends Component {
             <Form>
                 <FormGroup row>
                     <Label for="Plant Name" className="col-md-5 col-lg-4">Plant Name:</Label>
-                    <Col className="col-md-7 col-lg-8">
+                    <Col className="col-md-7 col-lg-8 mb-2">
                         <Input type="text" name="Plant Name" id="Plant Name" placeholder="Enter Name" value={this.state['Plant Name']} onChange={this.handleChange} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Label for="Light Level" className="col-md-5 col-lg-4">Light Level:</Label>
-                    <Col className="col-md-7 col-lg-8">
+                    <Col className="col-md-7 col-lg-8 mb-2">
                         <Input type="select" name="Light Level" id="Light Level" value={this.state['Light Level']} onChange={this.handleChange}>
                             <option value="DEFAULT">Choose Light Level</option>
                             <option value="Low">Low</option>
@@ -62,7 +62,7 @@ class SearchForm extends Component {
                 </FormGroup>
                 <FormGroup row>
                     <Label for="Water Level" className="col-md-5 col-lg-4">Water Level:</Label>
-                    <Col className="col-md-7 col-lg-8">
+                    <Col className="col-md-7 col-lg-8 mb-2">
                         <Input type="select" name="Water Level" id="Water Level" value={this.state['Water Level']} onChange={this.handleChange}>
                             <option value="DEFAULT">Choose Water Level</option>
                             <option value="Low">Low</option>
@@ -73,7 +73,7 @@ class SearchForm extends Component {
                 </FormGroup>
                 <FormGroup row>
                     <Label for="Toxicity" className="col-md-5 col-lg-4">Toxicity:</Label>
-                    <Col className="col-md-7 col-lg-8">
+                    <Col className="col-md-7 col-lg-8 mb-2">
                         <Input type="select" name="Toxicity" id="Toxicity" value={this.state['Toxicity']} onChange={this.handleChange}>
                             <option value="DEFAULT">Choose Toxicity Level</option>
                             <option value="Non Toxic">Non Toxic</option>
@@ -84,7 +84,7 @@ class SearchForm extends Component {
                 </FormGroup>
                 <FormGroup row>
                     <Label for="Difficulty" className="col-md-5 col-lg-4">Difficulty:</Label>
-                    <Col className="col-md-7 col-lg-8">
+                    <Col className="col-md-7 col-lg-8 mb-2">
                         <Input type="select" name="Difficulty" id="Difficulty" value={this.state['Difficulty']} onChange={this.handleChange}>
                             <option value="DEFAULT">Choose Overall Difficulty</option>
                             <option value="Easy">Easy</option>

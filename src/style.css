@@ -39,7 +39,7 @@ h4.social-media {
   background: #edf5ee;
 }
 
-.icon:hover {
+.heartIcon:hover {
   color: #fffd8a;
 }
 
@@ -90,6 +90,27 @@ nav a {
 
 nav a:hover {
   text-decoration: underline;
+}
+
+div.about-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+
+div.about-column {
+  display: flex;
+  flex-direction: column;
+  /*flex-basis: 100%;*/
+  flex: 1;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+div.about-column li {
+  list-style-type: none;
 }
 
 footer {
