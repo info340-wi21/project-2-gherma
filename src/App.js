@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { FaHome, FaInfoCircle, FaBars, FaRegUser, FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaBars, FaRegUser } from "react-icons/fa";
 import { Filtering } from './Form.js';
 import About from './About';
 import { PlantGrid } from './PlantGrid';
