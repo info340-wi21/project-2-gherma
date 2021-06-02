@@ -25,11 +25,14 @@ export function Filtering (props) {
     props.changeForm(filter, "Overall Difficulty");
   }
         return (
+            <div className="col-sm-6 col-lg-4 col-xl-3 mb-4 collapse show" id="form-feature">
+              <div className="card">
+                <p id="Filters" className="card-header mb-2">Filter Search: </p>
             <Form>
-                <FormGroup row>
+                <FormGroup className="px-2" row>
                     <Label for="Light Level" className="col-md-5 col-lg-4">Light Level:</Label>
                     <Col className="col-md-7 col-lg-8 mb-2">
-                        <Input type="select" name="Light Level" id="Light Level" onChange={lightClick}>
+                        <Input className="box" type="select" name="Light Level" id="Light Level" onChange={lightClick}>
                             <option value="DEFAULT">Choose Light Level</option>
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
@@ -37,10 +40,10 @@ export function Filtering (props) {
                         </Input>
                     </Col>
                 </FormGroup>
-                <FormGroup row>
+                <FormGroup className="px-2" row>
                     <Label for="Water Level" className="col-md-5 col-lg-4">Water Level:</Label>
                     <Col className="col-md-7 col-lg-8 mb-2">
-                        <Input type="select" name="Water Level" id="Water Level" onChange={waterClick}>
+                        <Input className="box" type="select" name="Water Level" id="Water Level" onChange={waterClick}>
                             <option value="DEFAULT">Choose Water Level</option>
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
@@ -48,10 +51,10 @@ export function Filtering (props) {
                         </Input>
                     </Col>
                 </FormGroup>
-                <FormGroup row>
+                <FormGroup className="px-2" row>
                     <Label for="Toxicity" className="col-md-5 col-lg-4">Toxicity:</Label>
                     <Col className="col-md-7 col-lg-8 mb-2">
-                        <Input type="select" name="Toxicity" id="Toxicity" onChange={toxClick}>
+                        <Input className="box" type="select" name="Toxicity" id="Toxicity" onChange={toxClick}>
                             <option value="DEFAULT">Choose Toxicity Level</option>
                             <option value="Non Toxic">Non Toxic</option>
                             <option value="Low">Low</option>
@@ -59,10 +62,10 @@ export function Filtering (props) {
                         </Input>
                     </Col>
                 </FormGroup>
-                <FormGroup row>
+                <FormGroup className="px-2" row>
                     <Label for="Difficulty" className="col-md-5 col-lg-4">Difficulty:</Label>
                     <Col className="col-md-7 col-lg-8 mb-2">
-                        <Input type="select" name="Difficulty" id="Difficulty" onChange={diffiClick}>
+                        <Input className="box" type="select" name="Difficulty" id="Difficulty" onChange={diffiClick}>
                             <option value="DEFAULT">Choose Overall Difficulty</option>
                             <option value="Easy">Easy</option>
                             <option value="Medium">Medium</option>
@@ -71,6 +74,8 @@ export function Filtering (props) {
                     </Col>
                 </FormGroup>
             </Form>
+            </div>
+          </div>
         );
     }
 
