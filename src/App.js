@@ -77,10 +77,6 @@ function Header () {
   );
 }
 
-/*<div className="container pt-5 text-center text-white">
-  <h1 className="font-weight-light">Plant.</h1>
-</div>*/
-
 function Footer () {
   return (
     <footer>
