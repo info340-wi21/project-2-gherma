@@ -1,9 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
+import { Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaBars, FaRegUser } from "react-icons/fa";
 import { Filtering } from './Form.js';
 import About from './About';
 import { PlantGrid } from './PlantGrid';
+
+// App renders the webpage, displaying different content based on the page a user is on.
 
 
 export function App(props) {
@@ -47,11 +50,21 @@ export function App(props) {
   return(
     <div>
       <Header />
-        <div className="row px-2">
-          <Filtering changeForm={changeForm}/>
-          <PlantGrid plantArray={filteredPlants}/>
-        </div>
-        <About />
+
+      <Switch>
+        <Route exact path="/">
+          <div className="row px-2">
+            <Filtering changeForm={changeForm}/>
+            <PlantGrid plantArray={filteredPlants}/>
+          </div>
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+
+        <Redirect to="/" />
+      </Switch>
+
       <Footer />
     </div>
   );
@@ -65,8 +78,8 @@ function Header () {
       <nav>
         <div className="d-md-none d-inline" id="hamburger-menu"><a href="#"><FaBars className="text-dark" aria-label="menu"/></a></div>
         <ul className="d-none d-md-inline p-1">
-          <a className="text-dark mr-3" href="#"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</a>
-          <a className="text-dark m-3" href="#"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</a>
+          <NavLink className="text-dark mr-3" activeClassName="activeLink" exact to="/"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</NavLink>
+          <NavLink className="text-dark m-3" activeClassName="activeLink" to="/about"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</NavLink>
           <a className="text-dark" href="#"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</a>
         </ul>
       </nav>

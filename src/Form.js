@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Form, FormGroup, Label, Input } from 'reactstrap';
 
+// Renders a form with filter options allowing users to filter plants based on certain criteria
 
 export function Filtering (props) {
 

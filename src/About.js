@@ -1,22 +1,14 @@
 import React from 'react';
 
+// Renders 'About' page content
+
 export function About () {
   return(
     <div>
-      <Header />
       <Content />
     </div>
   );
 }
-
-function Header () {
-  return (
-      <div className="container pt-5 mb-4 text-center">
-        <h1 className="font-weight-light">About Us</h1>
-      </div>
-  );
-}
-
 
 function Content() {
   return (

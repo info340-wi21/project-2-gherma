@@ -3,6 +3,8 @@ import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import { IoIosHeartEmpty, IoIosHeartHalf, IoIosHeart, IoIosHeartDislike } from "react-icons/io";
 
+// Renders a grid of interactive plant cards displaying general and detailed plant information. The PlantGrid is also responsive to filtering and displays accordingly based on user-selected filters
+
 export function PlantGrid (props) {
   const [favoritesList, setFavorites] = useState([])
 
