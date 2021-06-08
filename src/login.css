@@ -2,9 +2,13 @@
     .user {
       padding: 60px 0;
     }
-  
+
     .user form {
       margin: 0 auto;
       max-width: 320px;
     }
+  }
+
+  .button {
+    margin-top: 10px;
   }

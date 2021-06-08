@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import {NavLink} from 'react-router-dom';
-import "./css/login.css";
+import "./login.css";
 
 export default function Signup() {
     let [firstName, setFirstName] = useState("");
@@ -20,7 +20,7 @@ export default function Signup() {
     }
     return (
         <div className="user">
-            <h3>Register</h3>
+            <h2 className="text-center mb-3">Register</h2>
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" controlId="firstName">
                     <Form.Label>First name</Form.Label>
@@ -42,13 +42,13 @@ export default function Signup() {
                     <Form.Label>Re-enter password</Form.Label>
                     <Form.Control type="passCheck" value={passCheck} onChange={(e) => setPassCheck(e.target.value)}/>
                 </Form.Group>
-                <Button block size="lg" type="submit" disabled={!check()}>
+                <Button className="button" block size="md" type="submit" disabled={!check()}>
                     Sign up
                 </Button>
                 <p className="text-right">
-                    Already have an account? <NavLink to="/signIn">Sign in here</NavLink>
+                    Already have an account? <NavLink to="/signin">Sign in here</NavLink>
                 </p>
             </Form>
-        </div> 
-        ); 
+        </div>
+        );
     }

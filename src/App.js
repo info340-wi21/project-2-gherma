@@ -64,10 +64,10 @@ export function App(props) {
           <About />
         </Route>
         <Route exact path="/signin">
-        <SignIn />
+          <SignIn />
         </Route>
         <Route exact path="/signup">
-        <Signup />
+          <Signup />
         </Route>
         <Redirect to="/" />
       </Switch>

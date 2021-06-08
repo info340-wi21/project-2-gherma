@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import "./Login.css";
+import "./login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -35,7 +35,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={!check()}>
+        <Button className="button" block size="md" type="submit" disabled={!check()}>
           Login
         </Button>
       </Form>
