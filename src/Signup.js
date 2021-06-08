@@ -19,7 +19,7 @@ export default function Signup() {
         event.preventDefault();
     }
     return (
-        <div className="inner">
+        <div className="user">
             <h3>Register</h3>
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" controlId="firstName">
@@ -46,7 +46,7 @@ export default function Signup() {
                     Sign up
                 </Button>
                 <p className="text-right">
-                    Already have an account? <NavLink to="/login">Sign in here</NavLink>
+                    Already have an account? <NavLink to="/signIn">Sign in here</NavLink>
                 </p>
             </Form>
         </div> 

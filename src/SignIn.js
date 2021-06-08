@@ -16,7 +16,7 @@ export default function Login() {
   }
 
   return (
-    <div className="signIn">
+    <div className="user">
       <Form onSubmit={handleSubmit}>
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
