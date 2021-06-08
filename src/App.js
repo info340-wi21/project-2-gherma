@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaBars, FaRegUser } from "react-icons/fa";
 import { Filtering } from './Form.js';
+import SignIn from './SignIn.js';
+import Signup from './Signup.js';
 import About from './About';
 import { PlantGrid } from './PlantGrid';
 
@@ -61,7 +63,12 @@ export function App(props) {
         <Route path="/about">
           <About />
         </Route>
-
+        <Route exact path="/signin">
+        <SignIn />
+        </Route>
+        <Route exact path="/signup">
+        <Signup />
+        </Route>
         <Redirect to="/" />
       </Switch>
 
@@ -80,6 +87,7 @@ function Header () {
         <ul className="d-none d-md-inline p-1">
           <NavLink className="text-dark mr-3" activeClassName="activeLink" exact to="/"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</NavLink>
           <NavLink className="text-dark m-3" activeClassName="activeLink" to="/about"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</NavLink>
+
           <a className="text-dark" href="#"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</a>
         </ul>
       </nav>
