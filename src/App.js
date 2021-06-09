@@ -67,7 +67,7 @@ export function App(props) {
     firebase.auth().signOut();
   }
   /*
-  useEffect(() => { 
+  useEffect(() => {
     firebase.auth().onAuthStateChanged((firebaseUser) => {
       setUser(firebaseUser);
     })
@@ -101,7 +101,7 @@ return (
 }
 
 function Header () {
-  
+
 
   return (
     <header className="about">
