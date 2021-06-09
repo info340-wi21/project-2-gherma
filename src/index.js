@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
 import App from './App';
 import firebase from 'firebase/app';
+import 'firebase/database'
 
   // Your web app's Firebase configuration
 const firebaseConfig = {

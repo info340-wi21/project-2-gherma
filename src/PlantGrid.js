@@ -6,10 +6,12 @@ import { IoIosHeartEmpty, IoIosHeartHalf, IoIosHeart, IoIosHeartDislike } from "
 // Renders a grid of interactive plant cards displaying general and detailed plant information. The PlantGrid is also responsive to filtering and displays accordingly based on user-selected filters
 
 export function PlantGrid (props) {
-  const [favoritesList, setFavorites] = useState([])
+  let favoritesList = props.favoritesList;
+  let setFavoritesList = props.setFavoritesList;
+
 
   let plantElements = props.plantArray.map((plant) => {
-    let plantElement = <PlantCard plant={plant} key={plant['Plant Name']} favoritesList={favoritesList} setFavoritesList={setFavorites}/>
+    let plantElement = <PlantCard plant={plant} key={plant['Plant Name']} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/>
     return plantElement;
   })
 

@@ -1,13 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
-import { FaHome, FaInfoCircle, FaBars, FaRegUser } from "react-icons/fa";
+import { FaHome, FaInfoCircle, FaBars, FaRegUser, FaHeart } from "react-icons/fa";
 import { Filtering } from './Form.js';
 import About from './About';
 import { PlantGrid } from './PlantGrid';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { Favorites } from './Favorites';
 
 // App renders the webpage, displaying different content based on the page a user is on.
 
@@ -35,7 +36,9 @@ export function App(props) {
   let plantArray = props.plantData;
   let filteredPlants = [];
 
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(undefined);
+  const [favoritesList, setFavoritesList] = useState([]);
   const [water, setWater] = useState("");
   const [light, setLight] = useState("");
   const [tox, setTox] = useState("");
@@ -69,25 +72,68 @@ export function App(props) {
     }
   }
 
+
+  useEffect(() => {
+    const registered = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if(firebaseUser) {
+        setUser(firebaseUser);
+        setIsLoading(false);
+      } else {
+        setUser(null);
+        setIsLoading(false);
+      }
+    })
+    return function cleanup() {
+      registered();
+    }
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="text-center">
+        <i className="fa fa-spinner fa-spin fa-3x" aria-label="loading"></i>
+      </div>
+    );
+  }
+
+  let content = null;
+
+  if(!user) {
+    content = (
+      <div className="container">
+        <h1>Sign Up</h1>
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+      </div>
+    );
+  } else {
+    content = (
+      <div className="text-center">
+        <h1>Welcome {user.displayName}</h1>
+        <button className="btn" onClick={handleSignOut}>Log Out</button>
+      </div>
+    );
+  }
+
+
 return (
     <div>
-      <Header />
+      <Header user={user}/>
 
       <Switch>
         <Route exact path="/">
           <div className="row px-2">
             <Filtering changeForm={changeForm}/>
-            <PlantGrid plantArray={filteredPlants}/>
+            <PlantGrid plantArray={filteredPlants} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/>
           </div>
         </Route>
         <Route path="/favorites">
-          <PlantGrid plantArray={filteredPlants}/>
+          <Favorites favoritesList={favoritesList} user={user} setFavoritesList={setFavoritesList}/>
         </Route>
         <Route path="/about">
           <About />
         </Route>
         <Route exact path="/signin">
-          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+          {content}
         </Route>
         <Redirect to="/" />
       </Switch>
@@ -98,7 +144,16 @@ return (
 }
 
 
-function Header () {
+function Header (props) {
+  let user = props.user;
+  let content = null;
+
+  if (user) {
+    content = (
+      <button className="btn btn-sm btn-outline-secondary mb-2 me-auto" onClick={handleSignOut}>Log Out</button>
+    );
+  }
+
   return (
     <header className="about">
       <nav>
@@ -107,9 +162,9 @@ function Header () {
           <NavLink className="text-dark mr-3" activeClassName="activeLink" exact to="/"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</NavLink>
           <NavLink className="text-dark m-3" activeClassName="activeLink" to="/about"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</NavLink>
           <NavLink className="text-dark" activeClassName="activeLink" to="/signin"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</NavLink>
-          <NavLink className="text-dark m-3" activeClassName="activeLink" to="/favorites">Favorites</NavLink>
+          <NavLink className="text-dark m-2" activeClassName="activeLink" to="/favorites"><FaHeart className ="m-1" aria-hidden="true" aria-label="Favorite Icon"/>Favorites</NavLink>
         </ul>
-        <button className="btn btn-sm btn-outline-secondary ml-3 mb-2" onClick={handleSignOut}>Log Out</button>
+        {content}
       </nav>
       <div className="jumbotron mt-3 mb-3">
         <h1 className="display-4 text-white text-center pt-5">Plant.</h1>
@@ -120,7 +175,7 @@ function Header () {
 
 function Footer () {
   return (
-    <footer>
+    <footer className="mt-auto">
       <h4 className="text-center social-media font-weight-light">&#169;
 2021 Alex Gherman, Mai Frey, Sneha Reddy</h4>
     </footer>
