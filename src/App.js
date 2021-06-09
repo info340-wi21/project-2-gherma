@@ -16,9 +16,11 @@ const uiConfig = {
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       requireDisplayName: true
-    }
+    },
+    firebase.auth.GoogleAuthProvider.PROVIDERID
   ],
   credentialHelper: 'none',
+  signInFlow: 'popup',
   callbacks: {
     // avoids redirecting after sign-in
     signInSuccessWithAuthResult: () => false
@@ -66,14 +68,6 @@ export function App(props) {
   const handleSignOut = () => {
     firebase.auth().signOut();
   }
-  /*
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((firebaseUser) => {
-      setUser(firebaseUser);
-    })
-     if (user) {
-      const userRef = firebase.database().ref(firebase.auth().currentUser.uid);
-  */
 
 return (
     <div>
@@ -85,6 +79,9 @@ return (
             <Filtering changeForm={changeForm}/>
             <PlantGrid plantArray={filteredPlants}/>
           </div>
+        </Route>
+        <Route path="/favorites">
+          <PlantGrid plantArray={filteredPlants}/>
         </Route>
         <Route path="/about">
           <About />
@@ -100,6 +97,7 @@ return (
   );
 }
 
+
 function Header () {
 
 
@@ -110,8 +108,8 @@ function Header () {
         <ul className="d-none d-md-inline p-1">
           <NavLink className="text-dark mr-3" activeClassName="activeLink" exact to="/"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</NavLink>
           <NavLink className="text-dark m-3" activeClassName="activeLink" to="/about"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</NavLink>
-
-          <a className="text-dark" href="#"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</a>
+          <NavLink className="text-dark" activeClassName="activeLink" to="/signin"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</NavLink>
+          <NavLink className="text-dark m-3" activeClassName="activeLink" to="/favorites">Favorites</NavLink>
         </ul>
       </nav>
       <div className="jumbotron mt-3 mb-3">

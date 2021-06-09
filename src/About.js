@@ -34,9 +34,6 @@ function Content() {
                   <li className="text-center"><a href="https://www.greenwithpurpose.com/sustainable-houseplants-eco-friendly/">How to Make your Houseplants Sustainable</a></li>
                 </ul>
            </div>
-          <div className="about-column d-none d-md-block">
-            <img className="plant-tower" src="img/plantTower.jpeg" alt="building with overgrown plants spilling out"/>
-          </div>
         </div>
       </div>
     </main>
