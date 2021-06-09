@@ -26,6 +26,10 @@ const uiConfig = {
     signInSuccessWithAuthResult: () => false
   }
 }
+const handleSignOut = () => {
+  firebase.auth().signOut();
+}
+
 
 export function App(props) {
   let plantArray = props.plantData;
@@ -65,10 +69,6 @@ export function App(props) {
     }
   }
 
-  const handleSignOut = () => {
-    firebase.auth().signOut();
-  }
-
 return (
     <div>
       <Header />
@@ -99,8 +99,6 @@ return (
 
 
 function Header () {
-
-
   return (
     <header className="about">
       <nav>
@@ -111,6 +109,7 @@ function Header () {
           <NavLink className="text-dark" activeClassName="activeLink" to="/signin"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</NavLink>
           <NavLink className="text-dark m-3" activeClassName="activeLink" to="/favorites">Favorites</NavLink>
         </ul>
+        <button className="btn btn-sm btn-outline-secondary ml-3 mb-2" onClick={handleSignOut}>Log Out</button>
       </nav>
       <div className="jumbotron mt-3 mb-3">
         <h1 className="display-4 text-white text-center pt-5">Plant.</h1>

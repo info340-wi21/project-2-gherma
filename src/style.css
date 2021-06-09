@@ -120,6 +120,10 @@ div.about-column li {
   list-style-type: none;
 }
 
+button {
+  align-items: center;
+}
+
 footer {
   padding: 1rem;
   color: rgba(5, 122, 34, 0.78);
