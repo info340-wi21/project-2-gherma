@@ -3,18 +3,33 @@ import { useState } from 'react';
 import { Route, Switch, Link, NavLink, Redirect } from 'react-router-dom';
 import { FaHome, FaInfoCircle, FaBars, FaRegUser } from "react-icons/fa";
 import { Filtering } from './Form.js';
-import SignIn from './SignIn.js';
-import Signup from './Signup.js';
 import About from './About';
 import { PlantGrid } from './PlantGrid';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 // App renders the webpage, displaying different content based on the page a user is on.
 
+const uiConfig = {
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: true
+    }
+  ],
+  credentialHelper: 'none',
+  callbacks: {
+    // avoids redirecting after sign-in
+    signInSuccessWithAuthResult: () => false
+  }
+}
 
 export function App(props) {
   let plantArray = props.plantData;
   let filteredPlants = [];
 
+  const [user, setUser] = useState(undefined);
   const [water, setWater] = useState("");
   const [light, setLight] = useState("");
   const [tox, setTox] = useState("");
@@ -48,8 +63,19 @@ export function App(props) {
     }
   }
 
+  const handleSignOut = () => {
+    firebase.auth().signOut();
+  }
+  /*
+  useEffect(() => { 
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      setUser(firebaseUser);
+    })
+     if (user) {
+      const userRef = firebase.database().ref(firebase.auth().currentUser.uid);
+  */
 
-  return(
+return (
     <div>
       <Header />
 
@@ -64,10 +90,7 @@ export function App(props) {
           <About />
         </Route>
         <Route exact path="/signin">
-          <SignIn />
-        </Route>
-        <Route exact path="/signup">
-          <Signup />
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
         </Route>
         <Redirect to="/" />
       </Switch>
@@ -77,8 +100,8 @@ export function App(props) {
   );
 }
 
-
 function Header () {
+  
 
   return (
     <header className="about">
