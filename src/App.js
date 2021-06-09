@@ -17,7 +17,7 @@ const uiConfig = {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       requireDisplayName: true
     },
-    firebase.auth.GoogleAuthProvider.PROVIDERID
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID
   ],
   credentialHelper: 'none',
   signInFlow: 'popup',
