@@ -12,7 +12,7 @@ export function About () {
 
 function Content() {
   return (
-    <main className="text-center">
+    <main className="text-center px-5">
       <div className="about-content">
         <div className="about-row">
           <div className="text-center values">

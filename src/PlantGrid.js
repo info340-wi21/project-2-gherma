@@ -1,17 +1,25 @@
 import React from 'react';
 import { useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
+import firebase from 'firebase/app';
 import { IoIosHeartEmpty, IoIosHeartHalf, IoIosHeart, IoIosHeartDislike } from "react-icons/io";
 
 // Renders a grid of interactive plant cards displaying general and detailed plant information. The PlantGrid is also responsive to filtering and displays accordingly based on user-selected filters
 
 export function PlantGrid (props) {
+  let plantArray  = props.plantArray;
+
+  let plantNameArray = plantArray.map((plant) => {
+    return plant['Plant Name'];
+  })
+
+  let user = props.user;
   let favoritesList = props.favoritesList;
   let setFavoritesList = props.setFavoritesList;
 
 
-  let plantElements = props.plantArray.map((plant) => {
-    let plantElement = <PlantCard plant={plant} key={plant['Plant Name']} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/>
+  let plantElements = plantArray.map((plant) => {
+    let plantElement = <PlantCard plant={plant} key={plant['Plant Name']} favoritesList={favoritesList} setFavoritesList={setFavoritesList} user={user} plantNameArray={plantNameArray}/>
     return plantElement;
   })
 
@@ -32,6 +40,8 @@ export function PlantGrid (props) {
 
 
 function PlantCard (props) {
+  let plantNameArray = props.plantNameArray;
+  let user = props.user
   let plantObject = props.plant;
   let setFavoritesList = props.setFavoritesList;
   let favoritesList = props.favoritesList;
@@ -45,7 +55,7 @@ function PlantCard (props) {
   return (
     <ReactCardFlip containerStyle={{marginBottom: "10px", padding:"8px"}} isFlipped={isFlipped} flipDirection="horizontal">
       <div className="card h-100">
-        <CardFront plant={plantObject} handleImgClick={handleFlip} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/>
+        <CardFront plant={plantObject} handleImgClick={handleFlip} favoritesList={favoritesList} setFavoritesList={setFavoritesList} user={user} plantNameArray={plantNameArray}/>
       </div>
 
       <div className="card h-100">
@@ -57,6 +67,8 @@ function PlantCard (props) {
 
 
 function CardFront (props) {
+  let plantNameArray = props.plantNameArray
+  let user = props.user
   let plantObject = props.plant;
   let handleImgClick = props.handleImgClick;
   let setFavoritesList = props.setFavoritesList;
@@ -74,7 +86,7 @@ function CardFront (props) {
         </div>
       </div>
       <div className="card-footer d-flex justify-content-end">
-        <div className="m-1 p-0.5"><FavoriteButton plant={plantObject} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/></div>
+        <div className="m-1 p-0.5"><FavoriteButton plant={plantObject} favoritesList={favoritesList} setFavoritesList={setFavoritesList} user={user} plantNameArray={plantNameArray}/></div>
       </div>
     </div>
   );
@@ -134,53 +146,114 @@ function CardText (props) {
   );
 }
 
+
 function FavoriteButton (props) {
-  let plant = props.plant;
-  let favoritesList = props.favoritesList;
-  let setFavoritesList = props.setFavoritesList;
+let user = props.user
+let plant = props.plant;
+let favoritesList = props.favoritesList;
+let setFavoritesList = props.setFavoritesList;
 
-  const [isHovering, setHover] = useState(false);
-  const [isFavorited, setFavorite] = useState(false);
+const [isHovering, setHover] = useState(false);
+const [isFavorited, setFavorite] = useState(false);
 
-  const handleHover = () => {
-    setHover(!isHovering);
+const handleHover = () => {
+  setHover(!isHovering);
+}
+
+const handleClick = () => {
+  setFavorite(!isFavorited);
+  if (!isFavorited) {
+    addFavorites();
+  } else {
+    removeFavorites(plant['Plant Name']);
   }
+}
 
-  const handleClick = () => {
-    setFavorite(!isFavorited);
-    if (!isFavorited) {
-      addFavorites();
-    } else {
-      removeFavorites(plant['Plant Name']);
+const addFavorites = () => {
+  setFavoritesList([...favoritesList, plant]);
+}
+
+const removeFavorites = (currPlant) => {
+  setFavoritesList(favoritesList.filter((plant) => {
+    return plant['Plant Name'] !== currPlant;
+  }))
+}
+
+let icon = <IoIosHeartEmpty className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>
+
+if (isFavorited && !isHovering) {
+  icon = <IoIosHeart className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} color="green" size={22} aria-label="remove from favorites" role="button"/>;
+} else if (isFavorited && isHovering) {
+  icon = <IoIosHeartDislike className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={21} aria-label="remove from favorites" role="button"/>;
+} else if (!isFavorited && isHovering) {
+  icon = <IoIosHeartHalf className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>;
+}
+
+  /*const dbRef = firebase.database().ref();
+  let plantNameArray = props.plantNameArray;
+  let user = props.user
+  let plant = props.plant;
+  let plantName = plant['Plant Name'];
+  const [key, setKey] = useState("");
+
+  let searching = true;
+  let count = 0;
+  for (let index of plantNameArray) {
+    if (searching === true) {
+      if (index === plant['Plant Name']) {
+        searching = false;
+      } else {
+        count++;
+      }
     }
   }
 
-  const addFavorites = () => {
-    setFavoritesList([...favoritesList, plant]);
+    dbRef.child("User").child(user.uid).child('favorites').get().then((snapshot) => {
+      if (snapshot.exists()) {
+        let keyListValues = snapshot.val();
+        let keyList = Object.keys(keyListValues);
+        setKey(keyList[count]);
+      }
+    });
+
+  const handleClick = (event) => {
+    dbRef.child('User').child(user.uid).child('favorites').child(key).get().then((snapshot) => {
+      if (snapshot.exists()) {
+        let type = snapshot.val();
+        if (type === true) {
+          dbRef.child("User").child(user.uid).child('favorites').child(key).set(false);
+        } else {
+          dbRef.child("User").child(user.uid).child('favorites').child(key).set(true);
+        }
+      }
+    })
   }
 
-  const removeFavorites = (currPlant) => {
-    setFavoritesList(favoritesList.filter((plant) => {
-      return plant['Plant Name'] !== currPlant;
-    }))
+  const[icon, setIcon] = useState(<IoIosHeartEmpty className="heartIcon" onClick={handleClick} color="green" size={22} aria-label="add to favorites" role="button"/>);
+
+
+  if (user) {
+    dbRef.child("User").child(user.uid).child('favorites').get().then((snapshot) => {
+      if (snapshot.exists()) {
+        let keyListValues = snapshot.val();
+        let keyList = Object.keys(keyListValues);
+        let index = keyList[count];
+        if (keyListValues[index] === true) {
+          setIcon(<IoIosHeart className="heartIcon" onClick={handleClick} color="green" size={22} aria-label="remove from favorites" role="button"/>);
+        }
+      }
+    });
+  }*/
+
+  if (user) {
+    return (
+      <div>
+        {icon}
+      </div>
+    );
+  } else {
+    return null
   }
-
-  let icon = <IoIosHeartEmpty className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>
-
-  if (isFavorited && !isHovering) {
-    icon = <IoIosHeart className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} color="green" size={22} aria-label="remove from favorites" role="button"/>;
-  } else if (isFavorited && isHovering) {
-    icon = <IoIosHeartDislike className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={21} aria-label="remove from favorites" role="button"/>;
-  } else if (!isFavorited && isHovering) {
-    icon = <IoIosHeartHalf className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>;
-  }
-
-
-  return (
-    <div>
-      {icon}
-    </div>
-  );
 }
 
 export default PlantGrid;

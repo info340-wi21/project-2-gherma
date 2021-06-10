@@ -36,6 +36,10 @@ export function App(props) {
   let plantArray = props.plantData;
   let filteredPlants = [];
 
+  let plantNameArray = plantArray.map((plant) => {
+    return plant['Plant Name'];
+  })
+
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(undefined);
   const [favoritesList, setFavoritesList] = useState([]);
@@ -78,6 +82,7 @@ export function App(props) {
       if(firebaseUser) {
         setUser(firebaseUser);
         setIsLoading(false);
+        addToDb(firebaseUser);
       } else {
         setUser(null);
         setIsLoading(false);
@@ -87,6 +92,22 @@ export function App(props) {
       registered();
     }
   }, []);
+
+  function addToDb(firebaseUser) {
+    let user = firebaseUser;
+    const dbRef = firebase.database().ref();
+    dbRef.child("User").child(user.uid).get().then((snapshot) => {
+      if (!snapshot.exists()) {
+        firebase.database().ref('User/' + user.uid).set({
+        username: user.displayName
+      });
+
+      const favRef = firebase.database().ref('User/' + user.uid + '/favorites')
+      for (let name of plantNameArray) {
+        favRef.push(false);
+      }
+    }})
+  }
 
   if (isLoading) {
     return (
@@ -114,7 +135,6 @@ export function App(props) {
     );
   }
 
-
 return (
     <div>
       <Header user={user}/>
@@ -123,11 +143,11 @@ return (
         <Route exact path="/">
           <div className="row px-2">
             <Filtering changeForm={changeForm}/>
-            <PlantGrid plantArray={filteredPlants} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/>
+            <PlantGrid plantArray={filteredPlants} favoritesList={favoritesList} setFavoritesList={setFavoritesList} user={user}/>
           </div>
         </Route>
         <Route path="/favorites">
-          <Favorites favoritesList={favoritesList} user={user} setFavoritesList={setFavoritesList}/>
+          <Favorites plantArray={plantArray} favoritesList={favoritesList} user={user} setFavoritesList={setFavoritesList}/>
         </Route>
         <Route path="/about">
           <About />
@@ -148,23 +168,15 @@ function Header (props) {
   let user = props.user;
   let content = null;
 
-  if (user) {
-    content = (
-      <button className="btn btn-sm btn-outline-secondary mb-2 me-auto" onClick={handleSignOut}>Log Out</button>
-    );
-  }
-
   return (
     <header className="about">
-      <nav>
-        <div className="d-md-none d-inline" id="hamburger-menu"><a href="#"><FaBars className="text-dark" aria-label="menu"/></a></div>
-        <ul className="d-none d-md-inline p-1">
+      <nav id="menu">
+        <ul className="d-inline p-1">
           <NavLink className="text-dark mr-3" activeClassName="activeLink" exact to="/"><FaHome aria-hidden="true" aria-label="Home Icon"/> Home</NavLink>
           <NavLink className="text-dark m-3" activeClassName="activeLink" to="/about"><FaInfoCircle aria-hidden="true" aria-label="About Icon"/> About</NavLink>
           <NavLink className="text-dark" activeClassName="activeLink" to="/signin"><FaRegUser aria-hidden="true" aria-label="Account Icon"/> My Account</NavLink>
           <NavLink className="text-dark m-2" activeClassName="activeLink" to="/favorites"><FaHeart className ="m-1" aria-hidden="true" aria-label="Favorite Icon"/>Favorites</NavLink>
         </ul>
-        {content}
       </nav>
       <div className="jumbotron mt-3 mb-3">
         <h1 className="display-4 text-white text-center pt-5">Plant.</h1>
@@ -177,7 +189,7 @@ function Footer () {
   return (
     <footer className="mt-auto">
       <h4 className="text-center social-media font-weight-light">&#169;
-2021 Alex Gherman, Mai Frey, Sneha Reddy</h4>
+      2021 Alex Gherman, Mai Frey, Sneha Reddy</h4>
     </footer>
   );
 }

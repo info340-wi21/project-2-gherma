@@ -145,6 +145,12 @@ footer div {
   }
 }
 
+@media (max-width: 576px) {
+  #menu {
+    text-align:center
+  }
+}
+
 @media (min-width: 768px) {
   #form-feature {
     margin: 0;
@@ -155,4 +161,5 @@ footer div {
   #form-feature {
     margin-top: 37px;
   }
+
 }

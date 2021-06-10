@@ -8,12 +8,12 @@ export function Favorites(props) {
   let favoritesList = props.favoritesList;
   let setFavoritesList = props.setFavoritesList;
   let user = props.user;
-  console.log(favoritesList);
+  //const dbRef = firebase.database().ref();
 
 
   if (user) {
     return (
-      <PlantGrid plantArray={favoritesList} favoritesList={favoritesList} setFavoritesList={setFavoritesList}/>
+      <PlantGrid plantArray={favoritesList} favoritesList={favoritesList} setFavoritesList={setFavoritesList} user={user}/>
     );
   } else {
     return (
