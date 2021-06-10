@@ -38,7 +38,7 @@ export function PlantGrid (props) {
   );
 }
 
-
+// Creates each individual card with appropriate elements 
 function PlantCard (props) {
   let plantNameArray = props.plantNameArray;
   let user = props.user
@@ -146,48 +146,52 @@ function CardText (props) {
   );
 }
 
-
+// Toggles favorite button color and adds or removes from favoriteList
 function FavoriteButton (props) {
-let user = props.user
-let plant = props.plant;
-let favoritesList = props.favoritesList;
-let setFavoritesList = props.setFavoritesList;
+  let user = props.user
+  let plant = props.plant;
+  let favoritesList = props.favoritesList;
+  let setFavoritesList = props.setFavoritesList;
 
-const [isHovering, setHover] = useState(false);
-const [isFavorited, setFavorite] = useState(false);
+  const [isHovering, setHover] = useState(false);
+  const [isFavorited, setFavorite] = useState(false);
 
-const handleHover = () => {
-  setHover(!isHovering);
-}
-
-const handleClick = () => {
-  setFavorite(!isFavorited);
-  if (!isFavorited) {
-    addFavorites();
-  } else {
-    removeFavorites(plant['Plant Name']);
+  const handleHover = () => {
+    setHover(!isHovering);
   }
-}
 
-const addFavorites = () => {
-  setFavoritesList([...favoritesList, plant]);
-}
+  const handleClick = () => {
+    setFavorite(!isFavorited);
+    if (!isFavorited) {
+      addFavorites();
+    } else {
+      removeFavorites(plant['Plant Name']);
+    }
+  }
 
-const removeFavorites = (currPlant) => {
-  setFavoritesList(favoritesList.filter((plant) => {
-    return plant['Plant Name'] !== currPlant;
-  }))
-}
+  const addFavorites = () => {
+    setFavoritesList([...favoritesList, plant]);
+  }
 
-let icon = <IoIosHeartEmpty className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>
+  const removeFavorites = (currPlant) => {
+    setFavoritesList(favoritesList.filter((plant) => {
+      return plant['Plant Name'] !== currPlant;
+    }))
+  }
 
-if (isFavorited && !isHovering) {
-  icon = <IoIosHeart className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} color="green" size={22} aria-label="remove from favorites" role="button"/>;
-} else if (isFavorited && isHovering) {
-  icon = <IoIosHeartDislike className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={21} aria-label="remove from favorites" role="button"/>;
-} else if (!isFavorited && isHovering) {
-  icon = <IoIosHeartHalf className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>;
-}
+  let icon = <IoIosHeartEmpty className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>
+
+  if (isFavorited && !isHovering) {
+    icon = <IoIosHeart className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} color="green" size={22} aria-label="remove from favorites" role="button"/>;
+  } else if (isFavorited && isHovering) {
+    icon = <IoIosHeartDislike className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={21} aria-label="remove from favorites" role="button"/>;
+  } else if (!isFavorited && isHovering) {
+    icon = <IoIosHeartHalf className="heartIcon" onClick={handleClick} onMouseEnter={() => setHover(true)} onMouseLeave={handleHover} color="green" size={22} aria-label="add to favorites" role="button"/>;
+  }
+
+  /* ************************************************************************* */
+  // Below contains firebase realtime data code was unable to be finished
+  // for the favoriting function we left off
 
   /*const dbRef = firebase.database().ref();
   let plantNameArray = props.plantNameArray;

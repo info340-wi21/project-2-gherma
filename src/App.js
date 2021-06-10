@@ -33,9 +33,11 @@ const handleSignOut = () => {
 
 
 export function App(props) {
+
   let plantArray = props.plantData;
   let filteredPlants = [];
 
+  // for favoriting feature that was not implemented:
   let plantNameArray = plantArray.map((plant) => {
     return plant['Plant Name'];
   })
@@ -93,6 +95,7 @@ export function App(props) {
     }
   }, []);
 
+  // adds user to database if they are new user
   function addToDb(firebaseUser) {
     let user = firebaseUser;
     const dbRef = firebase.database().ref();
